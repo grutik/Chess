@@ -119,11 +119,13 @@
   <ItemGroup>
     <ClCompile Include="Board.cpp" />
     <ClCompile Include="Field.cpp" />
+    <ClCompile Include="Figure.cpp" />
     <ClCompile Include="Main.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Board.h" />
     <ClInclude Include="Field.h" />
+    <ClInclude Include="Figure.h" />
     <ClInclude Include="Main.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

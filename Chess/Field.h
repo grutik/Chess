@@ -1,4 +1,7 @@
 #pragma once
+
+#include "Figure.h";
+
 class Field
 {
 public:
@@ -7,6 +10,7 @@ public:
 	int y;
 	int color;
 	bool selected;
+	Figure *currentFigure;
 
 	Field();
 	Field(int x, int y, int color);
