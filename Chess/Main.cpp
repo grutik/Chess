@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <allegro5/allegro.h>
+#include <allegro5/allegro_image.h>
 #include "Main.h"
 #include "Board.h"
 
@@ -12,6 +13,7 @@ Board board;
 ALLEGRO_BITMAP *field_light;
 ALLEGRO_BITMAP *field_dark;
 ALLEGRO_BITMAP *field_selected;
+ALLEGRO_BITMAP *bmpChessPieces;
 
 ALLEGRO_DISPLAY *display = NULL;
 ALLEGRO_EVENT_QUEUE *event_queue = NULL;
@@ -40,6 +42,9 @@ void draw_board() {
 
 int main(int argc, char **argv)
 {
+
+
+
 	board = Board();
 
 	display = NULL;
@@ -77,10 +82,16 @@ int main(int argc, char **argv)
 		return -1;
 	}
 
+	al_init_image_addon();
+	bmpChessPieces = al_load_bitmap("C:\\Users\\Grutik\\Documents\\Visual Studio 2015\\Projects\\Chess\\Chess\\Chess_Pieces_Sprite.bmp");
+	al_convert_mask_to_alpha(bmpChessPieces, al_map_rgb(255, 0, 255));
+
 	CreateFieldBitmap(&field_light, 0, 200, 0);
 	CreateFieldBitmap(&field_dark, 50, 50, 50);
 	CreateFieldBitmap(&field_selected, 0, 0, 200);
 
+
+	
 	al_set_target_bitmap(al_get_backbuffer(display));
 
 	event_queue = al_create_event_queue();
@@ -125,12 +136,16 @@ int main(int argc, char **argv)
 			al_clear_to_color(al_map_rgb(0, 0, 0));
 
 			draw_board();
+			al_draw_bitmap_region(bmpChessPieces, 0, 0, FIELD_SIZE, FIELD_SIZE, 0, 0, 0);
 
 			al_flip_display();
 		}
 	}
 
 	al_destroy_bitmap(field_light);
+	al_destroy_bitmap(field_dark);
+	al_destroy_bitmap(field_selected);
+	al_destroy_bitmap(bmpChessPieces);
 	al_destroy_timer(timer);
 	al_destroy_display(display);
 	al_destroy_event_queue(event_queue);
