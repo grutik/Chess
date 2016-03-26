@@ -45,7 +45,10 @@ void draw_board() {
 			// Draw figure
 			if (field.currentFigure != nullptr)
 			{
-				al_draw_bitmap_region(bmpChessPieces, (static_cast<int>(field.currentFigure->type) - 1) * FIELD_SIZE, 0, FIELD_SIZE, FIELD_SIZE, xPosition, yPosition, 0);
+				if (field.currentFigure->white)
+					al_draw_bitmap_region(bmpChessPieces, (static_cast<int>(field.currentFigure->type) - 1) * FIELD_SIZE, 0, FIELD_SIZE, FIELD_SIZE, xPosition, yPosition, 0);
+				else
+					al_draw_bitmap_region(bmpChessPieces, (static_cast<int>(field.currentFigure->type) - 1) * FIELD_SIZE, 100, FIELD_SIZE, FIELD_SIZE, xPosition, yPosition, 0);
 			}
 		}
 	}
@@ -133,7 +136,7 @@ int main(int argc, char **argv)
 			ev.type == ALLEGRO_EVENT_MOUSE_ENTER_DISPLAY) {
 		}
 		else if (ev.type == ALLEGRO_EVENT_MOUSE_BUTTON_UP) {
-			ToggleField(ev.mouse.x, ev.mouse.y);
+			OnFieldSelected(ev.mouse.x, ev.mouse.y);
 			redraw = true;
 		}
 
@@ -159,15 +162,27 @@ int main(int argc, char **argv)
 	return 0;
 }
 
-void ToggleField(int x, int y)
+void OnFieldSelected(int x, int y)
 {
 	int fieldX = x / FIELD_SIZE;
 	int fieldY = y / FIELD_SIZE;
 
-	if (board.fields[fieldX][fieldY].selected)
-		board.fields[fieldX][fieldY].Unselect();
-	else
-		board.fields[fieldX][fieldY].Select();
+	Field* currentField = &board.fields[fieldX][fieldY];
+
+	if (board.selectedField == nullptr) {
+		board.selectedField = currentField;
+		board.selectedField->Select();
+	}
+	else {
+		if (board.selectedField == currentField) {
+			board.selectedField->Unselect();
+			board.selectedField = nullptr;
+		}
+		else
+		{
+			board.MoveFigure(currentField);
+		}
+	}
 }
 
 bool CreateFieldBitmap(ALLEGRO_BITMAP** bitmap, int r, int g, int b) {

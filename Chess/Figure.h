@@ -12,9 +12,10 @@ public:
 	};
 
 	Type type;
+	bool white;
 
 	Figure();
-	Figure(Type figureType);
+	Figure(Type figureType, bool white);
 	~Figure();
 };
 

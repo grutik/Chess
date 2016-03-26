@@ -6,9 +6,10 @@ Figure::Figure()
 {
 }
 
-Figure::Figure(Type figureType)
+Figure::Figure(Type figureType, bool isWhite)
 {
 	type = figureType;
+	white = isWhite;
 }
 
 
