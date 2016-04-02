@@ -44,9 +44,9 @@ void Board::SetFigures() {
 	fields[0][7].fig = new Rook(isWhite);
 	fields[7][7].fig = new Rook(isWhite);
 
-	//// Knights
-	//fields[1][7].currentFigure = new Figure(Figure::Type::KNIGHT, isWhite);
-	//fields[6][7].currentFigure = new Figure(Figure::Type::KNIGHT, isWhite);
+	// Knights
+	fields[1][7].fig = new Knight(isWhite);
+	fields[6][7].fig = new Knight(isWhite);
 
 	//// Bishops
 	//fields[2][7].currentFigure = new Figure(Figure::Type::BISHOP, isWhite);
@@ -69,9 +69,9 @@ void Board::SetFigures() {
 	fields[0][0].fig = new Rook(isWhite);
 	fields[7][0].fig = new Rook(isWhite);
 
-	//// Knights
-	//fields[1][0].currentFigure = new Figure(Figure::Type::KNIGHT, isWhite);
-	//fields[6][0].currentFigure = new Figure(Figure::Type::KNIGHT, isWhite);
+	// Knights
+	fields[1][0].fig = new Knight(isWhite);
+	fields[6][0].fig = new Knight(isWhite);
 
 	//// Bishops
 	//fields[2][0].currentFigure = new Figure(Figure::Type::BISHOP, isWhite);
