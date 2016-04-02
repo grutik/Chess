@@ -48,13 +48,13 @@ void Board::SetFigures() {
 	fields[1][7].fig = new Knight(isWhite);
 	fields[6][7].fig = new Knight(isWhite);
 
-	//// Bishops
-	//fields[2][7].currentFigure = new Figure(Figure::Type::BISHOP, isWhite);
-	//fields[5][7].currentFigure = new Figure(Figure::Type::BISHOP, isWhite);
+	// Bishops
+	fields[2][7].fig = new Bishop(isWhite);
+	fields[5][7].fig = new Bishop(isWhite);
 
-	//// Queen and King
-	//fields[3][7].currentFigure = new Figure(Figure::Type::QUEEN, isWhite);
-	//fields[4][7].currentFigure = new Figure(Figure::Type::KING, isWhite);
+	// Queen and King
+	fields[3][7].fig = new Queen(isWhite);
+	fields[4][7].fig = new King(isWhite);
 
 	// Black
 	isWhite = false;
@@ -73,13 +73,13 @@ void Board::SetFigures() {
 	fields[1][0].fig = new Knight(isWhite);
 	fields[6][0].fig = new Knight(isWhite);
 
-	//// Bishops
-	//fields[2][0].currentFigure = new Figure(Figure::Type::BISHOP, isWhite);
-	//fields[5][0].currentFigure = new Figure(Figure::Type::BISHOP, isWhite);
+	// bishops
+	fields[2][0].fig = new Bishop(isWhite);
+	fields[5][0].fig = new Bishop(isWhite);
 
-	//// Queen and King
-	//fields[3][0].currentFigure = new Figure(Figure::Type::QUEEN, isWhite);
-	//fields[4][0].currentFigure = new Figure(Figure::Type::KING, isWhite);
+	// queen and king
+	fields[3][0].fig = new Queen(isWhite);
+	fields[4][0].fig = new King(isWhite);
 
 }
 
