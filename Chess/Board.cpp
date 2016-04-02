@@ -40,9 +40,9 @@ void Board::SetFigures() {
 		fields[i][6].fig = new Pawn(isWhite);
 	}
 
-	//// Rooks
-	//fields[0][7].currentFigure = new Figure(Figure::Type::ROOK, isWhite);
-	//fields[7][7].currentFigure = new Figure(Figure::Type::ROOK, isWhite);
+	// Rooks
+	fields[0][7].fig = new Rook(isWhite);
+	fields[7][7].fig = new Rook(isWhite);
 
 	//// Knights
 	//fields[1][7].currentFigure = new Figure(Figure::Type::KNIGHT, isWhite);
@@ -65,9 +65,9 @@ void Board::SetFigures() {
 		fields[i][1].fig = new Pawn(isWhite);
 	}
 
-	//// Rooks
-	//fields[0][0].currentFigure = new Figure(Figure::Type::ROOK, isWhite);
-	//fields[7][0].currentFigure = new Figure(Figure::Type::ROOK, isWhite);
+	// Rooks
+	fields[0][0].fig = new Rook(isWhite);
+	fields[7][0].fig = new Rook(isWhite);
 
 	//// Knights
 	//fields[1][0].currentFigure = new Figure(Figure::Type::KNIGHT, isWhite);
@@ -97,6 +97,7 @@ void Board::TryMoveFigure(Field* destinationField) {
 
 			if (destinationField->x == result[0] && destinationField->y == result[1]) {
 				MoveFigure(destinationField);
+				break;
 			}
 		}
 	}

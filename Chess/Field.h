@@ -1,7 +1,7 @@
 #pragma once
 
-#include "Figure.h";
 #include "Pawn.h"
+#include "Rook.h"
 
 class Field
 {

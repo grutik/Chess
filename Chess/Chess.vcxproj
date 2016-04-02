@@ -122,6 +122,7 @@
     <ClCompile Include="Figure.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Pawn.cpp" />
+    <ClCompile Include="Rook.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Board.h" />
@@ -129,6 +130,7 @@
     <ClInclude Include="Figure.h" />
     <ClInclude Include="Main.h" />
     <ClInclude Include="Pawn.h" />
+    <ClInclude Include="Rook.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
