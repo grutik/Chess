@@ -14,6 +14,10 @@ public:
 
 	void CreateFields();
 	void SetFigures();
+	void TryMoveFigure(Field* destinationField);
+
+private:
 	void MoveFigure(Field* destinationField);
+	void BeatFigure(Field* destinationField);
 };
 

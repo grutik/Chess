@@ -43,12 +43,12 @@ void draw_board() {
 			al_draw_bitmap(field_color, xPosition, yPosition, 0);
 
 			// Draw figure
-			if (field.currentFigure != nullptr)
+			if (field.fig != nullptr)
 			{
-				if (field.currentFigure->white)
-					al_draw_bitmap_region(bmpChessPieces, (static_cast<int>(field.currentFigure->type) - 1) * FIELD_SIZE, 0, FIELD_SIZE, FIELD_SIZE, xPosition, yPosition, 0);
+				if (field.fig->white)
+					al_draw_bitmap_region(bmpChessPieces, (static_cast<int>(field.fig->type) - 1) * FIELD_SIZE, 0, FIELD_SIZE, FIELD_SIZE, xPosition, yPosition, 0);
 				else
-					al_draw_bitmap_region(bmpChessPieces, (static_cast<int>(field.currentFigure->type) - 1) * FIELD_SIZE, 100, FIELD_SIZE, FIELD_SIZE, xPosition, yPosition, 0);
+					al_draw_bitmap_region(bmpChessPieces, (static_cast<int>(field.fig->type) - 1) * FIELD_SIZE, 100, FIELD_SIZE, FIELD_SIZE, xPosition, yPosition, 0);
 			}
 		}
 	}
@@ -180,7 +180,7 @@ void OnFieldSelected(int x, int y)
 		}
 		else
 		{
-			board.MoveFigure(currentField);
+			board.TryMoveFigure(currentField);
 		}
 	}
 }

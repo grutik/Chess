@@ -12,7 +12,7 @@ Field::Field(int xx, int yy, int newColor)
 	y = yy;
 	color = newColor;
 	selected = false;
-	currentFigure = nullptr;
+	fig = nullptr;
 }
 
 void Field::Select()

@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Figure.h";
+#include "Pawn.h"
 
 class Field
 {
@@ -10,7 +11,7 @@ public:
 	int y;
 	int color;
 	bool selected;
-	Figure *currentFigure;
+	Figure *fig;
 
 	Field();
 	Field(int x, int y, int color);

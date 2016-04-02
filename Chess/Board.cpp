@@ -32,85 +32,122 @@ void Board::CreateFields() {
 void Board::SetFigures() {
 
 	// White
+	bool isWhite = true;
 
 	// Pawns
 	for (int i = 0; i < 8; i++)
 	{
-		fields[i][6].currentFigure = new Figure(Figure::Type::PAWN, true);
+		fields[i][6].fig = new Pawn(isWhite);
 	}
 
-	// Rooks
-	fields[0][7].currentFigure = new Figure(Figure::Type::ROOK, true);
-	fields[7][7].currentFigure = new Figure(Figure::Type::ROOK, true);
+	//// Rooks
+	//fields[0][7].currentFigure = new Figure(Figure::Type::ROOK, isWhite);
+	//fields[7][7].currentFigure = new Figure(Figure::Type::ROOK, isWhite);
 
-	// Knights
-	fields[1][7].currentFigure = new Figure(Figure::Type::KNIGHT, true);
-	fields[6][7].currentFigure = new Figure(Figure::Type::KNIGHT, true);
+	//// Knights
+	//fields[1][7].currentFigure = new Figure(Figure::Type::KNIGHT, isWhite);
+	//fields[6][7].currentFigure = new Figure(Figure::Type::KNIGHT, isWhite);
 
-	// Bishops
-	fields[2][7].currentFigure = new Figure(Figure::Type::BISHOP, true);
-	fields[5][7].currentFigure = new Figure(Figure::Type::BISHOP, true);
+	//// Bishops
+	//fields[2][7].currentFigure = new Figure(Figure::Type::BISHOP, isWhite);
+	//fields[5][7].currentFigure = new Figure(Figure::Type::BISHOP, isWhite);
 
-	// Queen and King
-	fields[3][7].currentFigure = new Figure(Figure::Type::QUEEN, true);
-	fields[4][7].currentFigure = new Figure(Figure::Type::KING, true);
+	//// Queen and King
+	//fields[3][7].currentFigure = new Figure(Figure::Type::QUEEN, isWhite);
+	//fields[4][7].currentFigure = new Figure(Figure::Type::KING, isWhite);
 
 	// Black
+	isWhite = false;
+
 	// Pawns
 	for (int i = 0; i < 8; i++)
 	{
-		fields[i][1].currentFigure = new Figure(Figure::Type::PAWN, false);
+		fields[i][1].fig = new Pawn(isWhite);
 	}
 
-	// Rooks
-	fields[0][0].currentFigure = new Figure(Figure::Type::ROOK, false);
-	fields[7][0].currentFigure = new Figure(Figure::Type::ROOK, false);
+	//// Rooks
+	//fields[0][0].currentFigure = new Figure(Figure::Type::ROOK, isWhite);
+	//fields[7][0].currentFigure = new Figure(Figure::Type::ROOK, isWhite);
 
-	// Knights
-	fields[1][0].currentFigure = new Figure(Figure::Type::KNIGHT, false);
-	fields[6][0].currentFigure = new Figure(Figure::Type::KNIGHT, false);
+	//// Knights
+	//fields[1][0].currentFigure = new Figure(Figure::Type::KNIGHT, isWhite);
+	//fields[6][0].currentFigure = new Figure(Figure::Type::KNIGHT, isWhite);
 
-	// Bishops
-	fields[2][0].currentFigure = new Figure(Figure::Type::BISHOP, false);
-	fields[5][0].currentFigure = new Figure(Figure::Type::BISHOP, false);
+	//// Bishops
+	//fields[2][0].currentFigure = new Figure(Figure::Type::BISHOP, isWhite);
+	//fields[5][0].currentFigure = new Figure(Figure::Type::BISHOP, isWhite);
 
-	// Queen and King
-	fields[3][0].currentFigure = new Figure(Figure::Type::QUEEN, false);
-	fields[4][0].currentFigure = new Figure(Figure::Type::KING, false);
+	//// Queen and King
+	//fields[3][0].currentFigure = new Figure(Figure::Type::QUEEN, isWhite);
+	//fields[4][0].currentFigure = new Figure(Figure::Type::KING, isWhite);
 
 }
 
-void Board::MoveFigure(Field* destinationField) {
+void Board::TryMoveFigure(Field* destinationField) {
 
-	if (destinationField->currentFigure == nullptr) {
+	Figure* currentFig = selectedField->fig;
+
+	if (destinationField->fig == nullptr) {
 		// Check if move is available for specified figure
 
-		Figure::WSKF* test = selectedField->currentFigure->availableMovements;
-		for (int i = 0; i < sizeof(test)/sizeof(Figure::WSKF*); i++)
+		Figure::movement* basicMoves = currentFig->basicMoves;
+		for (int i = 0; i < currentFig->basicMovesCount; i++)
 		{
-			int* result = test[i](selectedField->x, selectedField->y);
-			result = test[i](selectedField->x, selectedField->y);
+			int* result = basicMoves[i](selectedField->x, selectedField->y);
 
-			if (destinationField->x == result[0] &&
-				destinationField->y == result[1]) {
-				Figure* sourceFig = selectedField->currentFigure;
-				destinationField->currentFigure = sourceFig;
-				selectedField->currentFigure = nullptr;
-
-				destinationField->Unselect();
-				selectedField->Unselect();
-				selectedField = nullptr;
+			if (destinationField->x == result[0] && destinationField->y == result[1]) {
+				MoveFigure(destinationField);
 			}
 		}
 	}
 	else {
-		if (selectedField->currentFigure->white == destinationField->currentFigure->white) {
-			// The destination figure is of the same colour
+		if (currentFig->white == destinationField->fig->white) {
+			// Do nothing - the destination figure is of the same colour
 		}
 		else
 		{
-			// Check if move is available for specified figure
-			// Attack
+			Figure::movement* attackMoves;
+			int attackMovesCount;
+
+			if (currentFig->hasSpecialAttackAbilities) {
+				attackMoves = currentFig->attackMoves;
+				attackMovesCount = currentFig->attackMovesCount;
+			}
+			else
+			{
+				attackMoves = currentFig->basicMoves;
+				attackMovesCount = currentFig->basicMovesCount;
+			}
+
+
+			for (int i = 0; i < attackMovesCount; i++)
+			{
+				int* result = attackMoves[i](selectedField->x, selectedField->y);
+
+				if (destinationField->x == result[0] && destinationField->y == result[1]) {
+					BeatFigure(destinationField);
+					break;
+				}
+			}
 		}
 	}
+}
+
+void Board::MoveFigure(Field* destination) {
+	Figure* sourceFig = selectedField->fig;
+	destination->fig = sourceFig;
+	selectedField->fig = nullptr;
+
+	destination->Unselect();
+	selectedField->Unselect();
+	selectedField = nullptr;
+}
+
+void Board::BeatFigure(Field* destination) {
+	destination->fig = selectedField->fig;
+	selectedField->fig = nullptr;
+
+	destination->Unselect();
+	selectedField->Unselect();
+	selectedField = nullptr;
 }

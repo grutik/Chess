@@ -121,12 +121,14 @@
     <ClCompile Include="Field.cpp" />
     <ClCompile Include="Figure.cpp" />
     <ClCompile Include="Main.cpp" />
+    <ClCompile Include="Pawn.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Board.h" />
     <ClInclude Include="Field.h" />
     <ClInclude Include="Figure.h" />
     <ClInclude Include="Main.h" />
+    <ClInclude Include="Pawn.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

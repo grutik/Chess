@@ -16,6 +16,9 @@
     <Filter Include="img">
       <UniqueIdentifier>{270d11ff-7e01-4eb4-bc5c-eeb4b701a84f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Figures">
+      <UniqueIdentifier>{08f5108c-6b18-4daf-b095-040f47e38595}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -33,6 +36,9 @@
     <ClCompile Include="Figure.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Pawn.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Main.h">
@@ -45,6 +51,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Figure.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Pawn.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
