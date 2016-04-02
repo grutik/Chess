@@ -1,4 +1,6 @@
 #pragma once
+
+
 class Figure
 {
 public:
@@ -14,8 +16,16 @@ public:
 	Type type;
 	bool white;
 
+	// Tablica wskaŸników na funkcje umo¿liwiaj¹ce poruszanie siê
+	typedef int*(*WSKF)(int x, int y);
+	WSKF* availableMovements;
+
+
 	Figure();
 	Figure(Type figureType, bool white);
+
+	static int* pawnMove(int x, int y);
+
 	~Figure();
 };
 

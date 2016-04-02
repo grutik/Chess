@@ -30,7 +30,7 @@ void Board::CreateFields() {
 }
 
 void Board::SetFigures() {
-	
+
 	// White
 
 	// Pawns
@@ -81,14 +81,36 @@ void Board::SetFigures() {
 }
 
 void Board::MoveFigure(Field* destinationField) {
+
 	if (destinationField->currentFigure == nullptr) {
-		Figure* sourceFig = selectedField->currentFigure;
-		
-		destinationField->currentFigure = sourceFig;
-		destinationField->Unselect();
-		
-		selectedField->currentFigure = nullptr;
-		selectedField->Unselect();
-		selectedField = nullptr;
+		// Check if move is available for specified figure
+
+		Figure::WSKF* test = selectedField->currentFigure->availableMovements;
+		for (int i = 0; i < sizeof(test)/sizeof(Figure::WSKF*); i++)
+		{
+			int* result = test[i](selectedField->x, selectedField->y);
+			result = test[i](selectedField->x, selectedField->y);
+
+			if (destinationField->x == result[0] &&
+				destinationField->y == result[1]) {
+				Figure* sourceFig = selectedField->currentFigure;
+				destinationField->currentFigure = sourceFig;
+				selectedField->currentFigure = nullptr;
+
+				destinationField->Unselect();
+				selectedField->Unselect();
+				selectedField = nullptr;
+			}
+		}
+	}
+	else {
+		if (selectedField->currentFigure->white == destinationField->currentFigure->white) {
+			// The destination figure is of the same colour
+		}
+		else
+		{
+			// Check if move is available for specified figure
+			// Attack
+		}
 	}
 }
