@@ -45,10 +45,10 @@ void draw_board() {
 			// Draw figure
 			if (field.fig != nullptr)
 			{
-				if (field.fig->white)
-					al_draw_bitmap_region(bmpChessPieces, (static_cast<int>(field.fig->type) - 1) * FIELD_SIZE, 0, FIELD_SIZE, FIELD_SIZE, xPosition, yPosition, 0);
-				else
-					al_draw_bitmap_region(bmpChessPieces, (static_cast<int>(field.fig->type) - 1) * FIELD_SIZE, 100, FIELD_SIZE, FIELD_SIZE, xPosition, yPosition, 0);
+				int row = field.fig->white ? 0 : 100;
+				int col = 0;
+
+				al_draw_bitmap_region(bmpChessPieces, field.fig->spriteOffset * FIELD_SIZE, row, FIELD_SIZE, FIELD_SIZE, xPosition, yPosition, 0);
 			}
 		}
 	}

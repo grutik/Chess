@@ -4,7 +4,7 @@
 
 Rook::Rook(bool isWhite) : Figure(isWhite)
 {
-	type = Figure::Type::ROOK;
+	spriteOffset = 4;
 	recursiveMovement = true;
 	hasSpecialAttackAbilities = false;
 	InitBasicMoves();

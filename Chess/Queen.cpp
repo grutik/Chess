@@ -3,7 +3,7 @@
 
 Queen::Queen(bool isWhite) : Figure(isWhite)
 {
-	type = Figure::Type::QUEEN;
+	spriteOffset = 1;
 	recursiveMovement = true;
 	hasSpecialAttackAbilities = false;
 	InitBasicMoves();

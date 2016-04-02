@@ -4,7 +4,7 @@
 
 Bishop::Bishop(bool isWhite) : Figure(isWhite)
 {
-	type = Figure::Type::BISHOP;
+	spriteOffset = 2;
 	recursiveMovement = true;
 	hasSpecialAttackAbilities = false;
 	InitBasicMoves();

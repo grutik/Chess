@@ -2,7 +2,7 @@
 
 Pawn::Pawn(bool isWhite) : Figure(isWhite)
 {
-	type = Figure::Type::PAWN;
+	spriteOffset = 5;
 	recursiveMovement = false;
 	hasSpecialAttackAbilities = true;
 	InitBasicMoves();

@@ -4,7 +4,7 @@
 
 King::King(bool isWhite) : Figure(isWhite)
 {
-	type = Figure::Type::KING;
+	spriteOffset = 0;
 	recursiveMovement = false;
 	hasSpecialAttackAbilities = false;
 	InitBasicMoves();

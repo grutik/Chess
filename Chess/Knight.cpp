@@ -4,7 +4,7 @@
 
 Knight::Knight(bool isWhite) : Figure(isWhite)
 {
-	type = Figure::Type::KNIGHT;
+	spriteOffset = 3;
 	recursiveMovement = false;
 	hasSpecialAttackAbilities = false;
 	InitBasicMoves();
