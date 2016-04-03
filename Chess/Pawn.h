@@ -4,7 +4,7 @@ class Pawn :
 	public Figure
 {
 public:
-	Pawn(bool isWhite);
+	Pawn(bool isWhite, int spriteXOffset);
 	~Pawn();
 private:
 	void InitBasicMoves();

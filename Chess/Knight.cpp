@@ -2,9 +2,8 @@
 
 
 
-Knight::Knight(bool isWhite) : Figure(isWhite)
+Knight::Knight(bool isWhite, int spriteXOffset) : Figure(isWhite, spriteXOffset)
 {
-	spriteOffset = 3;
 	recursiveMovement = false;
 	hasSpecialAttackAbilities = false;
 	InitBasicMoves();

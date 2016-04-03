@@ -4,7 +4,7 @@ class Knight :
 	public Figure
 {
 public:
-	Knight(bool isWhite);
+	Knight(bool isWhite, int spriteXOffset);
 	~Knight();
 private:
 	void InitBasicMoves();

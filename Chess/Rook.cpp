@@ -2,9 +2,8 @@
 
 
 
-Rook::Rook(bool isWhite) : Figure(isWhite)
+Rook::Rook(bool isWhite, int spriteXOffset) : Figure(isWhite, spriteXOffset)
 {
-	spriteOffset = 4;
 	recursiveMovement = true;
 	hasSpecialAttackAbilities = false;
 	InitBasicMoves();

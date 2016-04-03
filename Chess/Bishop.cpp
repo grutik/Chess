@@ -2,9 +2,8 @@
 
 
 
-Bishop::Bishop(bool isWhite) : Figure(isWhite)
+Bishop::Bishop(bool isWhite, int spriteXOffset) : Figure(isWhite, spriteXOffset)
 {
-	spriteOffset = 2;
 	recursiveMovement = true;
 	hasSpecialAttackAbilities = false;
 	InitBasicMoves();

@@ -19,7 +19,7 @@ void Board::CreateFields() {
 	fields = new Field**[numberOfFields];
 	for (int i = 0; i < Board::numberOfFields; i++)
 	{
-		
+
 		fields[i] = new Field*[numberOfFields];
 		for (int j = 0; j < Board::numberOfFields; j++)
 		{
@@ -40,24 +40,24 @@ void Board::SetFigures() {
 	// Pawns
 	for (int i = 0; i < 8; i++)
 	{
-		fields[i][6]->fig = new Pawn(isWhite);
+		fields[i][6]->fig = new Pawn(isWhite, 0);
 	}
 
 	// Rooks
-	fields[0][7]->fig = new Rook(isWhite);
-	fields[7][7]->fig = new Rook(isWhite);
+	fields[0][7]->fig = new Rook(isWhite, 3);
+	fields[7][7]->fig = new Rook(isWhite, 3);
 
 	// Knights
-	fields[1][7]->fig = new Knight(isWhite);
-	fields[6][7]->fig = new Knight(isWhite);
+	fields[1][7]->fig = new Knight(isWhite, 1);
+	fields[6][7]->fig = new Knight(isWhite, 1);
 
 	// Bishops
-	fields[2][7]->fig = new Bishop(isWhite);
-	fields[5][7]->fig = new Bishop(isWhite);
+	fields[2][7]->fig = new Bishop(isWhite, 2);
+	fields[5][7]->fig = new Bishop(isWhite, 2);
 
 	// Queen and King
-	fields[3][7]->fig = new Queen(isWhite);
-	fields[4][7]->fig = new King(isWhite);
+	fields[3][7]->fig = new Queen(isWhite, 4);
+	fields[4][7]->fig = new King(isWhite, 5);
 
 	// Black
 	isWhite = false;
@@ -65,24 +65,24 @@ void Board::SetFigures() {
 	// Pawns
 	for (int i = 0; i < 8; i++)
 	{
-		fields[i][1]->fig = new Pawn(isWhite);
+		fields[i][1]->fig = new Pawn(isWhite, 0);
 	}
 
 	// Rooks
-	fields[0][0]->fig = new Rook(isWhite);
-	fields[7][0]->fig = new Rook(isWhite);
+	fields[0][0]->fig = new Rook(isWhite, 3);
+	fields[7][0]->fig = new Rook(isWhite, 3);
 
 	// Knights
-	fields[1][0]->fig = new Knight(isWhite);
-	fields[6][0]->fig = new Knight(isWhite);
+	fields[1][0]->fig = new Knight(isWhite, 1);
+	fields[6][0]->fig = new Knight(isWhite, 1);
 
 	// bishops
-	fields[2][0]->fig = new Bishop(isWhite);
-	fields[5][0]->fig = new Bishop(isWhite);
+	fields[2][0]->fig = new Bishop(isWhite, 2);
+	fields[5][0]->fig = new Bishop(isWhite, 2);
 
 	// queen and king
-	fields[3][0]->fig = new Queen(isWhite);
-	fields[4][0]->fig = new King(isWhite);
+	fields[3][0]->fig = new Queen(isWhite, 4);
+	fields[4][0]->fig = new King(isWhite, 5);
 
 }
 
@@ -108,7 +108,7 @@ void Board::TryMoveFigure(Field* destinationField) {
 	for (int i = 0; i < movesCount; i++)
 	{
 		TryGetNextStep(selectedField->x, selectedField->y, moves[i], destinationField);
-		
+
 		if (selectedField == nullptr)
 			break;
 	}
@@ -116,7 +116,7 @@ void Board::TryMoveFigure(Field* destinationField) {
 
 
 void Board::TryGetNextStep(int x, int y, Figure::movement movment, Field* destinationField) {
-	
+
 	int* nextCords = movment(x, y);
 
 	int nextX = nextCords[0];

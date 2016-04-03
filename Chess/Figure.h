@@ -19,7 +19,7 @@ public:
 	int attackMovesCount;
 
 	Figure();
-	Figure(bool white);
+	Figure(bool white, int spriteXOffset);
 
 	~Figure();
 

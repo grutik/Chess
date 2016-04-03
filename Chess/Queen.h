@@ -4,7 +4,7 @@ class Queen :
 	public Figure
 {
 public:
-	Queen(bool isWhite);
+	Queen(bool isWhite, int spriteXOffset);
 	~Queen();
 private:
 	void InitBasicMoves();

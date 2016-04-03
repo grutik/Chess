@@ -1,9 +1,8 @@
 #include "Queen.h"
 
 
-Queen::Queen(bool isWhite) : Figure(isWhite)
+Queen::Queen(bool isWhite, int spriteXOffset) : Figure(isWhite, spriteXOffset)
 {
-	spriteOffset = 1;
 	recursiveMovement = true;
 	hasSpecialAttackAbilities = false;
 	InitBasicMoves();

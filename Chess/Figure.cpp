@@ -4,8 +4,9 @@ Figure::Figure()
 {
 }
 
-Figure::Figure(bool isWhite)
+Figure::Figure(bool isWhite, int spriteXOffset)
 {
+	spriteOffset = spriteXOffset;
 	white = isWhite;
 	hasSpecialAttackAbilities = false;
 	recursiveMovement = true;

@@ -95,11 +95,11 @@ int main(int argc, char **argv)
 	}
 
 	al_init_image_addon();
-	bmpChessPieces = al_load_bitmap("C:\\Users\\Grutik\\Documents\\Visual Studio 2015\\Projects\\Chess\\Chess\\Chess_Pieces_Sprite.bmp");
+	bmpChessPieces = al_load_bitmap("Chess_Pieces_Sprite_100.bmp");
 	al_convert_mask_to_alpha(bmpChessPieces, al_map_rgb(255, 0, 255));
 
-	CreateFieldBitmap(&field_light, 0, 200, 0);
-	CreateFieldBitmap(&field_dark, 50, 50, 50);
+	CreateFieldBitmap(&field_light, 0, 180, 0);
+	CreateFieldBitmap(&field_dark, 50, 100, 50);
 	CreateFieldBitmap(&field_selected, 0, 0, 200);
 
 	al_set_target_bitmap(al_get_backbuffer(display));

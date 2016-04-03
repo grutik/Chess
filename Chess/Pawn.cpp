@@ -1,8 +1,7 @@
 #include "Pawn.h"
 
-Pawn::Pawn(bool isWhite) : Figure(isWhite)
+Pawn::Pawn(bool isWhite, int spriteXOffset) : Figure(isWhite, spriteXOffset)
 {
-	spriteOffset = 5;
 	recursiveMovement = false;
 	hasSpecialAttackAbilities = true;
 	InitBasicMoves();

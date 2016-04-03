@@ -2,9 +2,8 @@
 
 
 
-King::King(bool isWhite) : Figure(isWhite)
+King::King(bool isWhite, int spriteXOffset) : Figure(isWhite, spriteXOffset)
 {
-	spriteOffset = 0;
 	recursiveMovement = false;
 	hasSpecialAttackAbilities = false;
 	InitBasicMoves();
