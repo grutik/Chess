@@ -25,7 +25,7 @@ void draw_board() {
 		for (int j = 0; j < board.numberOfFields; j++)
 		{
 			// Simply draw gameboard
-			Field field = board.fields[i][j];
+			Field field = *board.fields[i][j];
 			ALLEGRO_BITMAP *field_color;
 
 			// Set field color
@@ -167,7 +167,7 @@ void OnFieldSelected(int x, int y)
 	int fieldX = x / FIELD_SIZE;
 	int fieldY = y / FIELD_SIZE;
 
-	Field* currentField = &board.fields[fieldX][fieldY];
+	Field* currentField = board.fields[fieldX][fieldY];
 
 	if (board.selectedField == nullptr) {
 		board.selectedField = currentField;

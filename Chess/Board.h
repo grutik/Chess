@@ -7,7 +7,7 @@ class Board
 public:
 	static const int numberOfFields = 8;
 	Field* selectedField;
-	Field fields[numberOfFields][numberOfFields];
+	Field*** fields;
 	
 	Board();
 	~Board();
@@ -19,5 +19,6 @@ public:
 private:
 	void MoveFigure(Field* destinationField);
 	void BeatFigure(Field* destinationField);
+	void TryGetNextStep(int x, int y, Figure::movement movment, Field* destinationField);
 };
 
