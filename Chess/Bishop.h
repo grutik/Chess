@@ -1,5 +1,9 @@
 #pragma once
 #include "Figure.h"
+
+///
+///  \brief Klasa reprezentuj¹ca figurê goñca
+///
 class Bishop :
 	public Figure
 {

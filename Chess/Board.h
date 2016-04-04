@@ -2,6 +2,9 @@
 
 #include "Field.h";
 
+///
+///  \brief Klasa reprezentuj¹ca szachownicê
+///
 class Board
 {
 public:

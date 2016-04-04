@@ -7,6 +7,9 @@
 #include "Queen.h"
 #include "King.h"
 
+///
+///  \brief Klasa reprezentuj¹ca pojedyncze pole szachownicy
+///
 class Field
 {
 public:

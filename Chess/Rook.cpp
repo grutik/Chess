@@ -4,8 +4,8 @@
 
 Rook::Rook(bool isWhite, int spriteXOffset) : Figure(isWhite, spriteXOffset)
 {
-	recursiveMovement = true;
-	hasSpecialAttackAbilities = false;
+	_hasRecursiveMovement = true;
+	_hasSpecialAttackAbilities = false;
 	InitBasicMoves();
 }
 
@@ -16,11 +16,11 @@ Rook::~Rook()
 
 void Rook::InitBasicMoves()
 {
-	basicMovesCount = 4;
-	basicMoves = new movement[basicMovesCount];
+	_basicMovesCount = 4;
+	_basicMoves = new movement[_basicMovesCount];
 
-	basicMoves[0] = [](int x, int y)->int* {return new int[2]{ x, y + 1 }; };
-	basicMoves[1] = [](int x, int y)->int* {return new int[2]{ x, y - 1 }; };
-	basicMoves[2] = [](int x, int y)->int* {return new int[2]{ x + 1, y }; };
-	basicMoves[3] = [](int x, int y)->int* {return new int[2]{ x - 1, y }; };
+	_basicMoves[0] = [](int x, int y)->int* {return new int[2]{ x, y + 1 }; };
+	_basicMoves[1] = [](int x, int y)->int* {return new int[2]{ x, y - 1 }; };
+	_basicMoves[2] = [](int x, int y)->int* {return new int[2]{ x + 1, y }; };
+	_basicMoves[3] = [](int x, int y)->int* {return new int[2]{ x - 1, y }; };
 }

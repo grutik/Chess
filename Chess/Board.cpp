@@ -93,16 +93,16 @@ void Board::TryMoveFigure(Field* destinationField) {
 	Figure::movement* moves;
 	int movesCount;
 
-	int isAttack = destinationField->fig != nullptr && currentFig->white != destinationField->fig->white;
+	int isAttack = destinationField->fig != nullptr && currentFig->IsWhite() != destinationField->fig->IsWhite();
 
-	if (isAttack && currentFig->hasSpecialAttackAbilities) {
-		moves = currentFig->attackMoves;
-		movesCount = currentFig->attackMovesCount;
+	if (isAttack && currentFig->HasSpecialAttackAbilities()) {
+		moves = currentFig->GetAttackMoves();
+		movesCount = currentFig->GetAttackMovesCount();
 	}
 	else
 	{
-		moves = currentFig->basicMoves;
-		movesCount = currentFig->basicMovesCount;
+		moves = currentFig->GetBasicMoves();
+		movesCount = currentFig->GetBasicMovesCount();
 	}
 
 	for (int i = 0; i < movesCount; i++)
@@ -132,7 +132,7 @@ void Board::TryGetNextStep(int x, int y, Figure::movement movment, Field* destin
 				MoveFigure(destinationField);
 			}
 			else {
-				if (destinationField->fig->white == selectedField->fig->white)
+				if (destinationField->fig->IsWhite() == selectedField->fig->IsWhite())
 					;//do nothing
 				else {
 					BeatFigure(destinationField);
@@ -140,7 +140,7 @@ void Board::TryGetNextStep(int x, int y, Figure::movement movment, Field* destin
 			}
 		}
 		else
-			if (currentField->fig == nullptr && selectedField->fig->recursiveMovement)
+			if (currentField->fig == nullptr && selectedField->fig->HasRecursiveMovement())
 				TryGetNextStep(nextCords[0], nextCords[1], movment, destinationField);
 
 	}

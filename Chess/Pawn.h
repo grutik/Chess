@@ -1,7 +1,10 @@
 #pragma once
 #include "Figure.h"
-class Pawn :
-	public Figure
+
+///
+///  \brief Klasa reprezentuj¹ca figurê pionka
+///
+class Pawn : public Figure
 {
 public:
 	Pawn(bool isWhite, int spriteXOffset);

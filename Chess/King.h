@@ -1,7 +1,10 @@
 #pragma once
 #include "Figure.h"
-class King :
-	public Figure
+
+///
+///  \brief Klasa reprezentuj¹ca figurê króla
+///
+class King : public Figure
 {
 public:
 	King(bool isWhite, int spriteXOffset);

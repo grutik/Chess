@@ -4,8 +4,8 @@
 
 Knight::Knight(bool isWhite, int spriteXOffset) : Figure(isWhite, spriteXOffset)
 {
-	recursiveMovement = false;
-	hasSpecialAttackAbilities = false;
+	_hasRecursiveMovement = false;
+	_hasSpecialAttackAbilities = false;
 	InitBasicMoves();
 }
 
@@ -16,18 +16,18 @@ Knight::~Knight()
 
 void Knight::InitBasicMoves()
 {
-	basicMovesCount = 8;
-	basicMoves = new movement[basicMovesCount];
+	_basicMovesCount = 8;
+	_basicMoves = new movement[_basicMovesCount];
 
-	basicMoves[0] = [](int x, int y)->int* {return new int[2]{ x + 2, y + 1 }; };
-	basicMoves[1] = [](int x, int y)->int* {return new int[2]{ x + 2, y - 1 }; };
+	_basicMoves[0] = [](int x, int y)->int* {return new int[2]{ x + 2, y + 1 }; };
+	_basicMoves[1] = [](int x, int y)->int* {return new int[2]{ x + 2, y - 1 }; };
 
-	basicMoves[2] = [](int x, int y)->int* {return new int[2]{ x - 2, y + 1 }; };
-	basicMoves[3] = [](int x, int y)->int* {return new int[2]{ x - 2, y - 1 }; };
+	_basicMoves[2] = [](int x, int y)->int* {return new int[2]{ x - 2, y + 1 }; };
+	_basicMoves[3] = [](int x, int y)->int* {return new int[2]{ x - 2, y - 1 }; };
 
-	basicMoves[4] = [](int x, int y)->int* {return new int[2]{ x + 1, y + 2 }; };
-	basicMoves[5] = [](int x, int y)->int* {return new int[2]{ x - 1, y + 2 }; };
+	_basicMoves[4] = [](int x, int y)->int* {return new int[2]{ x + 1, y + 2 }; };
+	_basicMoves[5] = [](int x, int y)->int* {return new int[2]{ x - 1, y + 2 }; };
 
-	basicMoves[6] = [](int x, int y)->int* {return new int[2]{ x + 1, y - 2 }; };
-	basicMoves[7] = [](int x, int y)->int* {return new int[2]{ x - 1, y - 2 }; };
+	_basicMoves[6] = [](int x, int y)->int* {return new int[2]{ x + 1, y - 2 }; };
+	_basicMoves[7] = [](int x, int y)->int* {return new int[2]{ x - 1, y - 2 }; };
 }

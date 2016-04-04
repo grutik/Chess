@@ -4,7 +4,7 @@
 #include "Main.h"
 #include "Board.h"
 
-const float FPS = 60;
+const float FPS = 30;
 const int SCREEN_W = 800;
 const int SCREEN_H = 800;
 const int FIELD_SIZE = 100;
@@ -45,10 +45,10 @@ void draw_board() {
 			// Draw figure
 			if (field.fig != nullptr)
 			{
-				int row = field.fig->white ? 0 : 100;
+				int row = field.fig->IsWhite() ? 0 : 100;
 				int col = 0;
 
-				al_draw_bitmap_region(bmpChessPieces, field.fig->spriteOffset * FIELD_SIZE, row, FIELD_SIZE, FIELD_SIZE, xPosition, yPosition, 0);
+				al_draw_bitmap_region(bmpChessPieces, field.fig->GetSpriteOffset() * FIELD_SIZE, row, FIELD_SIZE, FIELD_SIZE, xPosition, yPosition, 0);
 			}
 		}
 	}
@@ -58,7 +58,6 @@ int main(int argc, char **argv)
 {
 	board = Board();
 
-
 	display = NULL;
 	event_queue = NULL;
 	timer = NULL;
@@ -67,8 +66,6 @@ int main(int argc, char **argv)
 	field_dark = NULL;
 	field_selected = NULL;
 
-	float bouncer_x = SCREEN_W / 2.0 - FIELD_SIZE / 2.0;
-	float bouncer_y = SCREEN_H / 2.0 - FIELD_SIZE / 2.0;
 	bool redraw = true;
 
 	if (!al_init()) {
@@ -169,20 +166,21 @@ void OnFieldSelected(int x, int y)
 
 	Field* currentField = board.fields[fieldX][fieldY];
 
-	if (board.selectedField == nullptr) {
-		board.selectedField = currentField;
-		board.selectedField->Select();
-	}
-	else {
-		if (board.selectedField == currentField) {
-			board.selectedField->Unselect();
-			board.selectedField = nullptr;
+	if (board.selectedField != nullptr || currentField->fig != nullptr)
+		if (board.selectedField == nullptr) {
+			board.selectedField = currentField;
+			board.selectedField->Select();
 		}
-		else
-		{
-			board.TryMoveFigure(currentField);
+		else {
+			if (board.selectedField == currentField) {
+				board.selectedField->Unselect();
+				board.selectedField = nullptr;
+			}
+			else
+			{
+				board.TryMoveFigure(currentField);
+			}
 		}
-	}
 }
 
 bool CreateFieldBitmap(ALLEGRO_BITMAP** bitmap, int r, int g, int b) {
