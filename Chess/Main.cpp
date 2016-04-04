@@ -4,22 +4,145 @@
 #include "Main.h"
 #include "Board.h"
 
-const float FPS = 30;
-const int SCREEN_W = 800;
-const int SCREEN_H = 800;
-const int FIELD_SIZE = 100;
-
 Board board;
-ALLEGRO_BITMAP *field_light;
-ALLEGRO_BITMAP *field_dark;
-ALLEGRO_BITMAP *field_selected;
-ALLEGRO_BITMAP *bmpChessPieces;
+ALLEGRO_BITMAP *field_light = NULL;
+ALLEGRO_BITMAP *field_dark = NULL;
+ALLEGRO_BITMAP *field_selected = NULL;
+ALLEGRO_BITMAP *bmpChessPieces = NULL;
 
 ALLEGRO_DISPLAY *display = NULL;
 ALLEGRO_EVENT_QUEUE *event_queue = NULL;
 ALLEGRO_TIMER *timer = NULL;
 
-void draw_board() {
+
+int main(int argc, char **argv)
+{
+	if (InitializeBasicAllegroObjects() == -1)
+		return -1;
+
+	LoadBitmaps();
+
+	if (CreateEvents() == -1)
+		return -1;
+
+	board = Board();
+
+	al_clear_to_color(al_map_rgb(0, 0, 0));
+	al_flip_display();
+	al_start_timer(timer);
+
+
+	RunMainGameLoop();
+	
+
+	al_destroy_bitmap(field_light);
+	al_destroy_bitmap(field_dark);
+	al_destroy_bitmap(field_selected);
+	al_destroy_bitmap(bmpChessPieces);
+	al_destroy_timer(timer);
+	al_destroy_display(display);
+	al_destroy_event_queue(event_queue);
+
+	return 0;
+}
+
+int InitializeBasicAllegroObjects()
+{
+	if (!al_init()) {
+		fprintf(stderr, "failed to initialize allegro!\n");
+		return -1;
+	}
+
+	if (!al_install_mouse()) {
+		fprintf(stderr, "failed to initialize the mouse!\n");
+		return -1;
+	}
+
+	timer = al_create_timer(1.0 / FPS);
+	if (!timer) {
+		fprintf(stderr, "failed to create timer!\n");
+		return -1;
+	}
+
+	display = al_create_display(SCREEN_W, SCREEN_H);
+	if (!display) {
+		fprintf(stderr, "failed to create display!\n");
+		al_destroy_timer(timer);
+		return -1;
+	}
+
+	al_init_image_addon();
+
+	return 0;
+}
+
+void OnFieldSelected(int x, int y)
+{
+	int fieldX = x / FIELD_SIZE;
+	int fieldY = y / FIELD_SIZE;
+
+	Field* currentField = board.fields[fieldX][fieldY];
+
+	if (board.selectedField != nullptr || currentField->fig != nullptr)
+		if (board.selectedField == nullptr) {
+			board.selectedField = currentField;
+			board.selectedField->Select();
+		}
+		else {
+			if (board.selectedField == currentField) {
+				board.selectedField->Unselect();
+				board.selectedField = nullptr;
+			}
+			else
+			{
+				board.TryMoveFigure(currentField);
+			}
+		}
+}
+
+void LoadBitmaps() {
+	bmpChessPieces = al_load_bitmap(FIGURE_SPRITES_IMG_PATH);
+	al_convert_mask_to_alpha(bmpChessPieces, al_map_rgb(255, 0, 255));
+
+	CreateFieldBitmap(&field_light, 0, 180, 0);
+	CreateFieldBitmap(&field_dark, 50, 100, 50);
+	CreateFieldBitmap(&field_selected, 0, 0, 200);
+
+
+	al_set_target_bitmap(al_get_backbuffer(display));
+}
+
+int CreateEvents() {
+	event_queue = al_create_event_queue();
+	if (!event_queue) {
+		fprintf(stderr, "failed to create event_queue!\n");
+		al_destroy_bitmap(field_light);
+		al_destroy_display(display);
+		al_destroy_timer(timer);
+		return -1;
+	}
+
+	al_register_event_source(event_queue, al_get_display_event_source(display));
+	al_register_event_source(event_queue, al_get_timer_event_source(timer));
+	al_register_event_source(event_queue, al_get_mouse_event_source());
+
+	return 0;
+}
+
+bool CreateFieldBitmap(ALLEGRO_BITMAP** bitmap, int r, int g, int b) {
+	*bitmap = al_create_bitmap(FIELD_SIZE, FIELD_SIZE);
+	if (!*bitmap) {
+		fprintf(stderr, "failed to create bitmap!\n");
+		al_destroy_display(display);
+		al_destroy_timer(timer);
+		return false;
+	}
+	al_set_target_bitmap(*bitmap);
+	al_clear_to_color(al_map_rgb(r, g, b));
+	return true;
+}
+
+void DrawBoard() {
 	for (int i = 0; i < board.numberOfFields; i++)
 	{
 		for (int j = 0; j < board.numberOfFields; j++)
@@ -54,69 +177,9 @@ void draw_board() {
 	}
 }
 
-int main(int argc, char **argv)
-{
-	board = Board();
-
-	display = NULL;
-	event_queue = NULL;
-	timer = NULL;
-
-	field_light = NULL;
-	field_dark = NULL;
-	field_selected = NULL;
+void RunMainGameLoop() {
 
 	bool redraw = true;
-
-	if (!al_init()) {
-		fprintf(stderr, "failed to initialize allegro!\n");
-		return -1;
-	}
-
-	if (!al_install_mouse()) {
-		fprintf(stderr, "failed to initialize the mouse!\n");
-		return -1;
-	}
-
-	timer = al_create_timer(1.0 / FPS);
-	if (!timer) {
-		fprintf(stderr, "failed to create timer!\n");
-		return -1;
-	}
-
-	display = al_create_display(SCREEN_W, SCREEN_H);
-	if (!display) {
-		fprintf(stderr, "failed to create display!\n");
-		al_destroy_timer(timer);
-		return -1;
-	}
-
-	al_init_image_addon();
-	bmpChessPieces = al_load_bitmap("Chess_Pieces_Sprite_100.bmp");
-	al_convert_mask_to_alpha(bmpChessPieces, al_map_rgb(255, 0, 255));
-
-	CreateFieldBitmap(&field_light, 0, 180, 0);
-	CreateFieldBitmap(&field_dark, 50, 100, 50);
-	CreateFieldBitmap(&field_selected, 0, 0, 200);
-
-	al_set_target_bitmap(al_get_backbuffer(display));
-
-	event_queue = al_create_event_queue();
-	if (!event_queue) {
-		fprintf(stderr, "failed to create event_queue!\n");
-		al_destroy_bitmap(field_light);
-		al_destroy_display(display);
-		al_destroy_timer(timer);
-		return -1;
-	}
-
-	al_register_event_source(event_queue, al_get_display_event_source(display));
-	al_register_event_source(event_queue, al_get_timer_event_source(timer));
-	al_register_event_source(event_queue, al_get_mouse_event_source());
-
-	al_clear_to_color(al_map_rgb(0, 0, 0));
-	al_flip_display();
-	al_start_timer(timer);
 
 	while (1)
 	{
@@ -139,59 +202,9 @@ int main(int argc, char **argv)
 
 		if (redraw && al_is_event_queue_empty(event_queue)) {
 			redraw = false;
-
 			al_clear_to_color(al_map_rgb(0, 0, 0));
-
-			draw_board();
-
+			DrawBoard();
 			al_flip_display();
 		}
 	}
-
-	al_destroy_bitmap(field_light);
-	al_destroy_bitmap(field_dark);
-	al_destroy_bitmap(field_selected);
-	al_destroy_bitmap(bmpChessPieces);
-	al_destroy_timer(timer);
-	al_destroy_display(display);
-	al_destroy_event_queue(event_queue);
-
-	return 0;
-}
-
-void OnFieldSelected(int x, int y)
-{
-	int fieldX = x / FIELD_SIZE;
-	int fieldY = y / FIELD_SIZE;
-
-	Field* currentField = board.fields[fieldX][fieldY];
-
-	if (board.selectedField != nullptr || currentField->fig != nullptr)
-		if (board.selectedField == nullptr) {
-			board.selectedField = currentField;
-			board.selectedField->Select();
-		}
-		else {
-			if (board.selectedField == currentField) {
-				board.selectedField->Unselect();
-				board.selectedField = nullptr;
-			}
-			else
-			{
-				board.TryMoveFigure(currentField);
-			}
-		}
-}
-
-bool CreateFieldBitmap(ALLEGRO_BITMAP** bitmap, int r, int g, int b) {
-	*bitmap = al_create_bitmap(FIELD_SIZE, FIELD_SIZE);
-	if (!*bitmap) {
-		fprintf(stderr, "failed to create bitmap!\n");
-		al_destroy_display(display);
-		al_destroy_timer(timer);
-		return false;
-	}
-	al_set_target_bitmap(*bitmap);
-	al_clear_to_color(al_map_rgb(r, g, b));
-	return true;
 }
