@@ -7,11 +7,18 @@ Board::Board()
 	selectedField = nullptr;
 	CreateFields();
 	SetFigures();
+	_isWhiteTurn = true;
 }
 
 Board::~Board()
 {
 }
+
+bool Board::IsWhiteTurn()
+{
+	return _isWhiteTurn;
+}
+
 
 void Board::CreateFields() {
 	bool draw_white = true;
@@ -86,6 +93,7 @@ void Board::SetFigures() {
 
 }
 
+
 void Board::TryMoveFigure(Field* destinationField) {
 
 	Figure* currentFig = selectedField->fig;
@@ -113,7 +121,6 @@ void Board::TryMoveFigure(Field* destinationField) {
 			break;
 	}
 }
-
 
 void Board::TryGetNextStep(int x, int y, Figure::movement movment, Field* destinationField) {
 
@@ -147,6 +154,7 @@ void Board::TryGetNextStep(int x, int y, Figure::movement movment, Field* destin
 	else return;
 }
 
+
 void Board::MoveFigure(Field* destination) {
 	Figure* sourceFig = selectedField->fig;
 	destination->fig = sourceFig;
@@ -155,6 +163,8 @@ void Board::MoveFigure(Field* destination) {
 	destination->Unselect();
 	selectedField->Unselect();
 	selectedField = nullptr;
+
+	SetOpponentTurn();
 }
 
 void Board::BeatFigure(Field* destination) {
@@ -164,4 +174,10 @@ void Board::BeatFigure(Field* destination) {
 	destination->Unselect();
 	selectedField->Unselect();
 	selectedField = nullptr;
+
+	SetOpponentTurn();
+}
+
+void Board::SetOpponentTurn() {
+	_isWhiteTurn = !_isWhiteTurn;
 }

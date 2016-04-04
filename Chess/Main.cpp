@@ -33,7 +33,7 @@ int main(int argc, char **argv)
 
 
 	RunMainGameLoop();
-	
+
 
 	al_destroy_bitmap(field_light);
 	al_destroy_bitmap(field_dark);
@@ -83,18 +83,21 @@ void OnFieldSelected(int x, int y)
 
 	Field* currentField = board.fields[fieldX][fieldY];
 
-	if (board.selectedField != nullptr || currentField->fig != nullptr)
-		if (board.selectedField == nullptr) {
-			board.selectedField = currentField;
-			board.selectedField->Select();
+	if (board.selectedField != nullptr || currentField->fig != nullptr) // Obs³uguj, jeœli jakaœ figura jest ju¿ wybrana LUB podjêto próbê zaznaczenia figury (zabezpiecznie przed zaznaczeniem pustego pola)
+		if (board.selectedField == nullptr) { // Gdy ¿adne pole nie by³o wczeœniej wybrane
+			if (board.IsWhiteTurn() == currentField->fig->IsWhite()) { // Wybierz figurê, jeœli jej kolor jest zgodny z kolorem bie¿¹cego gracza
+				board.selectedField = currentField;
+				board.selectedField->Select();
+			}
 		}
 		else {
-			if (board.selectedField == currentField) {
+			if (board.selectedField == currentField) { // Gdy klikniêto w to samo pole drugi raz
 				board.selectedField->Unselect();
 				board.selectedField = nullptr;
 			}
 			else
 			{
+				// Gdy jedno z pól by³o wczeœniej zaznaczone, a teraz klikniêto w inne
 				board.TryMoveFigure(currentField);
 			}
 		}

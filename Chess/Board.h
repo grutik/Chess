@@ -19,9 +19,14 @@ public:
 	void SetFigures();
 	void TryMoveFigure(Field* destinationField);
 
+	bool IsWhiteTurn();
+
 private:
 	void MoveFigure(Field* destinationField);
 	void BeatFigure(Field* destinationField);
 	void TryGetNextStep(int x, int y, Figure::movement movment, Field* destinationField);
+
+	bool _isWhiteTurn;
+	void SetOpponentTurn();
 };
 
