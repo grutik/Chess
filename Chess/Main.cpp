@@ -84,9 +84,9 @@ void OnFieldSelected(int x, int y)
 
 	Field* currentField = board.fields[fieldX][fieldY];
 
-	if (board.selectedField != nullptr || currentField->fig != nullptr) // Obs³uguj, jeœli jakaœ figura jest ju¿ wybrana LUB podjêto próbê zaznaczenia figury (zabezpiecznie przed zaznaczeniem pustego pola)
+	if (board.selectedField != nullptr || currentField->HasFigure()) // Obs³uguj, jeœli jakaœ figura jest ju¿ wybrana LUB podjêto próbê zaznaczenia figury (zabezpiecznie przed zaznaczeniem pustego pola)
 		if (board.selectedField == nullptr) { // Gdy ¿adne pole nie by³o wczeœniej wybrane
-			if (board.IsWhiteTurn() == currentField->fig->IsWhite()) { // Wybierz figurê, jeœli jej kolor jest zgodny z kolorem bie¿¹cego gracza
+			if (board.IsWhiteTurn() == currentField->GetFigure()->IsWhite()) { // Wybierz figurê, jeœli jej kolor jest zgodny z kolorem bie¿¹cego gracza
 				board.selectedField = currentField;
 				board.selectedField->Select();
 			}
@@ -155,27 +155,27 @@ void DrawBoard() {
 			ALLEGRO_BITMAP *field_color;
 
 			// Wybór koloru pola
-			if (field.selected)
+			if (field.IsSelected())
 				field_color = field_selected;
 			else
-				if (field.color == 1)
+				if (field.GetColor() == 1)
 					field_color = field_light;
 				else
 					field_color = field_dark;
 
-			int xPosition = FIELD_SIZE*field.x;
-			int yPosition = FIELD_SIZE*field.y;
+			int xPosition = FIELD_SIZE*field.GetX();
+			int yPosition = FIELD_SIZE*field.GetY();
 
 			// Rysowanie pola
 			al_draw_bitmap(field_color, xPosition, yPosition, 0);
 
 			// Rysowanie figury znajduj¹cej siê na tym polu
-			if (field.fig != nullptr)
+			if (field.HasFigure())
 			{
-				int row = field.fig->IsWhite() ? 0 : 100;
+				int row = field.GetFigure()->IsWhite() ? 0 : 100;
 				int col = 0;
 
-				al_draw_bitmap_region(bmpChessPieces, field.fig->GetSpriteOffset() * FIELD_SIZE, row, FIELD_SIZE, FIELD_SIZE, xPosition, yPosition, 0);
+				al_draw_bitmap_region(bmpChessPieces, field.GetFigure()->GetSpriteOffset() * FIELD_SIZE, row, FIELD_SIZE, FIELD_SIZE, xPosition, yPosition, 0);
 			}
 		}
 	}
