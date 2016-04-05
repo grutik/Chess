@@ -27,6 +27,16 @@ public:
 	bool IsWhite();
 
 	///
+	/// Okreœla, czy figury s¹ tego samego koloru
+	///
+	bool HasSameColor(Figure* figure);
+
+	///
+	/// Okreœla, czy figury s¹ ró¿nego koloru
+	///
+	bool HasDifferentColor(Figure* figure);
+
+	///
 	/// \brief Okreœla, czy ruchy figury mog¹ byæ okreœlone w sposób rekursywny.
 	///
 	/// Je¿eli parametr ten zwraca prawdê, to ruch figury mo¿e byæ okreœlony przez wiêcej ni¿ jedno wykonanie pojedynczej funkcji, okreœlaj¹ce jej ruch (pojedynczej funkcji z zestawu podstawowych ruchów).

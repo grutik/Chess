@@ -21,6 +21,16 @@ bool Figure::IsWhite() {
 	return _isWhite;
 }
 
+bool Figure::HasSameColor(Figure * figure)
+{
+	return this->IsWhite() == figure->IsWhite();
+}
+
+bool Figure::HasDifferentColor(Figure * figure)
+{
+	return !this->HasSameColor(figure);
+}
+
 bool Figure::HasRecursiveMovement()
 {
 	return _hasRecursiveMovement;

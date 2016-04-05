@@ -101,7 +101,7 @@ void Board::TryMoveFigure(Field* destinationField) {
 	Figure::movement* moves;
 	int movesCount;
 
-	int isAttack = destinationField->HasFigure() && currentFig->IsWhite() != destinationField->GetFigure()->IsWhite();
+	int isAttack = destinationField->HasFigure() && currentFig->HasDifferentColor(destinationField->GetFigure());
 
 	if (isAttack && currentFig->HasSpecialAttackAbilities()) {
 		moves = currentFig->GetAttackMoves();
@@ -139,9 +139,8 @@ void Board::TryGetNextStep(int x, int y, Figure::movement movment, Field* destin
 				MoveFigure(destinationField);
 			}
 			else {
-				if (destinationField->GetFigure()->IsWhite() == selectedField->GetFigure()->IsWhite())
-					;//do nothing
-				else {
+				if (destinationField->GetFigure()->HasDifferentColor(selectedField->GetFigure()))
+				{
 					BeatFigure(destinationField);
 				}
 			}
