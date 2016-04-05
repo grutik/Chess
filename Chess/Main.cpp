@@ -46,6 +46,7 @@ int main(int argc, char **argv)
 	return 0;
 }
 
+
 int InitializeBasicAllegroObjects()
 {
 	if (!al_init()) {
@@ -150,11 +151,10 @@ void DrawBoard() {
 	{
 		for (int j = 0; j < board.numberOfFields; j++)
 		{
-			// Simply draw gameboard
 			Field field = *board.fields[i][j];
 			ALLEGRO_BITMAP *field_color;
 
-			// Set field color
+			// Wybór koloru pola
 			if (field.selected)
 				field_color = field_selected;
 			else
@@ -166,9 +166,10 @@ void DrawBoard() {
 			int xPosition = FIELD_SIZE*field.x;
 			int yPosition = FIELD_SIZE*field.y;
 
+			// Rysowanie pola
 			al_draw_bitmap(field_color, xPosition, yPosition, 0);
 
-			// Draw figure
+			// Rysowanie figury znajduj¹cej siê na tym polu
 			if (field.fig != nullptr)
 			{
 				int row = field.fig->IsWhite() ? 0 : 100;
@@ -195,15 +196,12 @@ void RunMainGameLoop() {
 		else if (ev.type == ALLEGRO_EVENT_DISPLAY_CLOSE) {
 			break;
 		}
-		else if (ev.type == ALLEGRO_EVENT_MOUSE_AXES ||
-			ev.type == ALLEGRO_EVENT_MOUSE_ENTER_DISPLAY) {
-		}
-		else if (ev.type == ALLEGRO_EVENT_MOUSE_BUTTON_UP) {
+		else if (ev.type == ALLEGRO_EVENT_MOUSE_BUTTON_UP) { // Gdy klikniêto
 			OnFieldSelected(ev.mouse.x, ev.mouse.y);
 			redraw = true;
 		}
 
-		if (redraw && al_is_event_queue_empty(event_queue)) {
+		if (redraw && al_is_event_queue_empty(event_queue)) { // Przemalowanie planszy
 			redraw = false;
 			al_clear_to_color(al_map_rgb(0, 0, 0));
 			DrawBoard();
