@@ -2,10 +2,6 @@
 
 
 
-Field::Field()
-{
-}
-
 Field::Field(int xx, int yy, int newColor)
 {
 	_x = xx;
@@ -14,6 +10,26 @@ Field::Field(int xx, int yy, int newColor)
 	_selected = false;
 	_fig = nullptr;
 }
+
+Field::~Field()
+{
+}
+
+int Field::GetX()
+{
+	return _x;
+}
+
+int Field::GetY()
+{
+	return _y;
+}
+
+int Field::GetColor()
+{
+	return _color;
+}
+
 
 bool Field::HasFigure()
 {
@@ -35,6 +51,7 @@ void Field::RemoveFigure()
 	_fig = nullptr;
 }
 
+
 int Field::IsSelected()
 {
 	return _selected;
@@ -51,21 +68,6 @@ void Field::Unselect()
 }
 
 
-Field::~Field()
-{
-}
 
-int Field::GetX()
-{
-	return _x;
-}
 
-int Field::GetY()
-{
-	return _y;
-}
 
-int Field::GetColor()
-{
-	return _color;
-}
