@@ -1,10 +1,53 @@
 #include "Board.h"
 
 
+Field * Board::GetField(int x, int y)
+{
+	return _fields[x][y];
+}
+
+void Board::SelectField(Field * field)
+{
+	_selectedField = field;
+	_selectedField->Select();
+}
+
+void Board::ClearSelectedField()
+{
+	_selectedField->Unselect();
+	_selectedField = nullptr;
+}
+
+void Board::OnFieldSelected(int x, int y)
+{
+	Field* currentField = GetField(x, y);
+
+	if (this->HasSelectedField() || currentField->HasFigure()) // Obs³uguj, jeœli jakaœ figura jest ju¿ wybrana LUB podjêto próbê zaznaczenia figury (zabezpiecznie przed zaznaczeniem pustego pola)
+		if (!this->HasSelectedField()) { // Gdy ¿adne pole nie by³o wczeœniej wybrane
+			if (this->IsWhiteTurn() == currentField->GetFigure()->IsWhite()) { // Wybierz figurê, jeœli jej kolor jest zgodny z kolorem bie¿¹cego gracza
+				this->SelectField(currentField);
+			}
+		}
+		else {
+			if (_selectedField == currentField) { // Gdy klikniêto w to samo pole drugi raz
+				this->ClearSelectedField();
+			}
+			else
+			{
+				// Gdy jedno z pól by³o wczeœniej zaznaczone, a teraz klikniêto w inne
+				this->TryMoveFigure(currentField);
+			}
+		}
+}
+
+bool Board::HasSelectedField()
+{
+	return _selectedField != nullptr;
+}
 
 Board::Board()
 {
-	selectedField = nullptr;
+	_selectedField = nullptr;
 	CreateFields();
 	SetFigures();
 	_isWhiteTurn = true;
@@ -23,15 +66,15 @@ bool Board::IsWhiteTurn()
 void Board::CreateFields() {
 	bool draw_white = true;
 
-	fields = new Field**[numberOfFields];
+	_fields = new Field**[numberOfFields];
 	for (int i = 0; i < Board::numberOfFields; i++)
 	{
 
-		fields[i] = new Field*[numberOfFields];
+		_fields[i] = new Field*[numberOfFields];
 		for (int j = 0; j < Board::numberOfFields; j++)
 		{
 			int color = draw_white ? 1 : 0;
-			fields[i][j] = new Field(i, j, color);
+			_fields[i][j] = new Field(i, j, color);
 
 			draw_white = !draw_white;
 		}
@@ -47,24 +90,24 @@ void Board::SetFigures() {
 	// Pawns
 	for (int i = 0; i < 8; i++)
 	{
-		fields[i][6]->SetFigure(new Pawn(isWhite, 0));
+		_fields[i][6]->SetFigure(new Pawn(isWhite, 0));
 	}
 
 	// Rooks
-	fields[0][7]->SetFigure(new Rook(isWhite, 3));
-	fields[7][7]->SetFigure(new Rook(isWhite, 3));
+	_fields[0][7]->SetFigure(new Rook(isWhite, 3));
+	_fields[7][7]->SetFigure(new Rook(isWhite, 3));
 
 	// Knights	 
-	fields[1][7]->SetFigure(new Knight(isWhite, 1));
-	fields[6][7]->SetFigure(new Knight(isWhite, 1));
+	_fields[1][7]->SetFigure(new Knight(isWhite, 1));
+	_fields[6][7]->SetFigure(new Knight(isWhite, 1));
 
 	// Bishops	  
-	fields[2][7]->SetFigure(new Bishop(isWhite, 2));
-	fields[5][7]->SetFigure(new Bishop(isWhite, 2));
+	_fields[2][7]->SetFigure(new Bishop(isWhite, 2));
+	_fields[5][7]->SetFigure(new Bishop(isWhite, 2));
 
 	// Queen and King
-	fields[3][7]->SetFigure(new Queen(isWhite, 4));
-	fields[4][7]->SetFigure(new King(isWhite, 5));
+	_fields[3][7]->SetFigure(new Queen(isWhite, 4));
+	_fields[4][7]->SetFigure(new King(isWhite, 5));
 
 	// Black
 	isWhite = false;
@@ -72,31 +115,31 @@ void Board::SetFigures() {
 	// Pawns
 	for (int i = 0; i < 8; i++)
 	{
-		fields[i][1]->SetFigure(new Pawn(isWhite, 0));
+		_fields[i][1]->SetFigure(new Pawn(isWhite, 0));
 	}
 
 	// Rooks
-	fields[0][0]->SetFigure(new Rook(isWhite, 3));
-	fields[7][0]->SetFigure(new Rook(isWhite, 3));
+	_fields[0][0]->SetFigure(new Rook(isWhite, 3));
+	_fields[7][0]->SetFigure(new Rook(isWhite, 3));
 
 	// Knights
-	fields[1][0]->SetFigure(new Knight(isWhite, 1));
-	fields[6][0]->SetFigure(new Knight(isWhite, 1));
+	_fields[1][0]->SetFigure(new Knight(isWhite, 1));
+	_fields[6][0]->SetFigure(new Knight(isWhite, 1));
 
 	// bishops
-	fields[2][0]->SetFigure(new Bishop(isWhite, 2));
-	fields[5][0]->SetFigure(new Bishop(isWhite, 2));
+	_fields[2][0]->SetFigure(new Bishop(isWhite, 2));
+	_fields[5][0]->SetFigure(new Bishop(isWhite, 2));
 
 	// queen and king
-	fields[3][0]->SetFigure(new Queen(isWhite, 4));
-	fields[4][0]->SetFigure(new King(isWhite, 5));
+	_fields[3][0]->SetFigure(new Queen(isWhite, 4));
+	_fields[4][0]->SetFigure(new King(isWhite, 5));
 
 }
 
 
 void Board::TryMoveFigure(Field* destinationField) {
 
-	Figure* currentFig = selectedField->GetFigure();
+	Figure* currentFig = _selectedField->GetFigure();
 
 	Figure::movement* moves;
 	int movesCount;
@@ -115,9 +158,9 @@ void Board::TryMoveFigure(Field* destinationField) {
 
 	for (int i = 0; i < movesCount; i++)
 	{
-		TryGetNextStep(selectedField->GetX(), selectedField->GetY(), moves[i], destinationField);
+		TryGetNextStep(_selectedField->GetX(), _selectedField->GetY(), moves[i], destinationField);
 
-		if (selectedField == nullptr)
+		if (_selectedField == nullptr)
 			break;
 	}
 }
@@ -131,7 +174,7 @@ void Board::TryGetNextStep(int x, int y, Figure::movement movment, Field* destin
 
 	if (nextX >= 0 && nextX < 8 && nextY >= 0 && nextY < 8) {
 
-		Field* currentField = fields[nextX][nextY];
+		Field* currentField = _fields[nextX][nextY];
 
 		if (nextX == destinationField->GetX() && nextY == destinationField->GetY()) {
 			if (!destinationField->HasFigure())
@@ -139,14 +182,14 @@ void Board::TryGetNextStep(int x, int y, Figure::movement movment, Field* destin
 				MoveFigure(destinationField);
 			}
 			else {
-				if (destinationField->GetFigure()->HasDifferentColor(selectedField->GetFigure()))
+				if (destinationField->GetFigure()->HasDifferentColor(_selectedField->GetFigure()))
 				{
 					BeatFigure(destinationField);
 				}
 			}
 		}
 		else
-			if (!currentField->HasFigure() && selectedField->GetFigure()->HasRecursiveMovement())
+			if (!currentField->HasFigure() && _selectedField->GetFigure()->HasRecursiveMovement())
 				TryGetNextStep(nextCords[0], nextCords[1], movment, destinationField);
 
 	}
@@ -155,24 +198,24 @@ void Board::TryGetNextStep(int x, int y, Figure::movement movment, Field* destin
 
 
 void Board::MoveFigure(Field* destination) {
-	Figure* sourceFig = selectedField->GetFigure();
+	Figure* sourceFig = _selectedField->GetFigure();
 	destination->SetFigure(sourceFig);
-	selectedField->RemoveFigure();
+	_selectedField->RemoveFigure();
 
 	destination->Unselect();
-	selectedField->Unselect();
-	selectedField = nullptr;
+	_selectedField->Unselect();
+	_selectedField = nullptr;
 
 	SetOpponentTurn();
 }
 
 void Board::BeatFigure(Field* destination) {
-	destination->SetFigure(selectedField->GetFigure());
-	selectedField->RemoveFigure();
+	destination->SetFigure(_selectedField->GetFigure());
+	_selectedField->RemoveFigure();
 
 	destination->Unselect();
-	selectedField->Unselect();
-	selectedField = nullptr;
+	_selectedField->Unselect();
+	_selectedField = nullptr;
 
 	SetOpponentTurn();
 }

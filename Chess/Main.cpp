@@ -82,26 +82,7 @@ void OnFieldSelected(int x, int y)
 	int fieldX = x / FIELD_SIZE;
 	int fieldY = y / FIELD_SIZE;
 
-	Field* currentField = board.fields[fieldX][fieldY];
-
-	if (board.selectedField != nullptr || currentField->HasFigure()) // Obs³uguj, jeœli jakaœ figura jest ju¿ wybrana LUB podjêto próbê zaznaczenia figury (zabezpiecznie przed zaznaczeniem pustego pola)
-		if (board.selectedField == nullptr) { // Gdy ¿adne pole nie by³o wczeœniej wybrane
-			if (board.IsWhiteTurn() == currentField->GetFigure()->IsWhite()) { // Wybierz figurê, jeœli jej kolor jest zgodny z kolorem bie¿¹cego gracza
-				board.selectedField = currentField;
-				board.selectedField->Select();
-			}
-		}
-		else {
-			if (board.selectedField == currentField) { // Gdy klikniêto w to samo pole drugi raz
-				board.selectedField->Unselect();
-				board.selectedField = nullptr;
-			}
-			else
-			{
-				// Gdy jedno z pól by³o wczeœniej zaznaczone, a teraz klikniêto w inne
-				board.TryMoveFigure(currentField);
-			}
-		}
+	board.OnFieldSelected(fieldX, fieldY);
 }
 
 void LoadBitmaps() {
@@ -151,7 +132,7 @@ void DrawBoard() {
 	{
 		for (int j = 0; j < board.numberOfFields; j++)
 		{
-			Field field = *board.fields[i][j];
+			Field field = *board.GetField(i, j);
 			ALLEGRO_BITMAP *field_color;
 
 			// Wybór koloru pola
