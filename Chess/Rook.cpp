@@ -2,7 +2,7 @@
 
 
 
-Rook::Rook(bool isWhite, int spriteXOffset) : Figure(isWhite, spriteXOffset)
+Rook::Rook(bool isWhite) : Figure(isWhite)
 {
 	_hasRecursiveMovement = true;
 	_hasSpecialAttackAbilities = false;

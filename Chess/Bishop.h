@@ -8,7 +8,7 @@ class Bishop :
 	public Figure
 {
 public:
-	Bishop(bool isWhite, int spriteXOffset);
+	Bishop(bool isWhite);
 	~Bishop();
 private:
 	void InitBasicMoves();

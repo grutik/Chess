@@ -7,7 +7,7 @@
 class Pawn : public Figure
 {
 public:
-	Pawn(bool isWhite, int spriteXOffset);
+	Pawn(bool isWhite);
 	~Pawn();
 private:
 	void InitBasicMoves();

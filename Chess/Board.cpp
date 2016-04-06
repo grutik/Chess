@@ -84,55 +84,83 @@ void Board::CreateFields() {
 
 void Board::SetFigures() {
 
-	// White
+	//** White **//
 	bool isWhite = true;
 
 	// Pawns
 	for (int i = 0; i < 8; i++)
 	{
-		_fields[i][6]->SetFigure(new Pawn(isWhite, 0));
+		_fields[i][6]->SetFigure(new Pawn(isWhite));
+		_fields[i][6]->GetFigure()->SetSpriteOffset(0);
 	}
 
 	// Rooks
-	_fields[0][7]->SetFigure(new Rook(isWhite, 3));
-	_fields[7][7]->SetFigure(new Rook(isWhite, 3));
+	_fields[0][7]->SetFigure(new Rook(isWhite));
+	_fields[0][7]->GetFigure()->SetSpriteOffset(3);
+
+	_fields[7][7]->SetFigure(new Rook(isWhite));
+	_fields[7][7]->GetFigure()->SetSpriteOffset(3);
 
 	// Knights	 
-	_fields[1][7]->SetFigure(new Knight(isWhite, 1));
-	_fields[6][7]->SetFigure(new Knight(isWhite, 1));
+	_fields[1][7]->SetFigure(new Knight(isWhite));
+	_fields[1][7]->GetFigure()->SetSpriteOffset(1);
+
+	_fields[6][7]->SetFigure(new Knight(isWhite));
+	_fields[6][7]->GetFigure()->SetSpriteOffset(1);
 
 	// Bishops	  
-	_fields[2][7]->SetFigure(new Bishop(isWhite, 2));
-	_fields[5][7]->SetFigure(new Bishop(isWhite, 2));
+	_fields[2][7]->SetFigure(new Bishop(isWhite));
+	_fields[2][7]->GetFigure()->SetSpriteOffset(2);
+
+	_fields[5][7]->SetFigure(new Bishop(isWhite));
+	_fields[5][7]->GetFigure()->SetSpriteOffset(2);
 
 	// Queen and King
-	_fields[3][7]->SetFigure(new Queen(isWhite, 4));
-	_fields[4][7]->SetFigure(new King(isWhite, 5));
+	_fields[3][7]->SetFigure(new Queen(isWhite));
+	_fields[3][7]->GetFigure()->SetSpriteOffset(4);
 
-	// Black
+	_fields[4][7]->SetFigure(new King(isWhite));
+	_fields[4][7]->GetFigure()->SetSpriteOffset(5);
+
+
+	//** Black **//
 	isWhite = false;
 
 	// Pawns
 	for (int i = 0; i < 8; i++)
 	{
-		_fields[i][1]->SetFigure(new Pawn(isWhite, 0));
+		_fields[i][1]->SetFigure(new Pawn(isWhite));
+		_fields[i][1]->GetFigure()->SetSpriteOffset(0);
 	}
 
 	// Rooks
-	_fields[0][0]->SetFigure(new Rook(isWhite, 3));
-	_fields[7][0]->SetFigure(new Rook(isWhite, 3));
+	_fields[0][0]->SetFigure(new Rook(isWhite));
+	_fields[0][0]->GetFigure()->SetSpriteOffset(3);
+
+	_fields[7][0]->SetFigure(new Rook(isWhite));
+	_fields[7][0]->GetFigure()->SetSpriteOffset(3);
 
 	// Knights
-	_fields[1][0]->SetFigure(new Knight(isWhite, 1));
-	_fields[6][0]->SetFigure(new Knight(isWhite, 1));
+	_fields[1][0]->SetFigure(new Knight(isWhite));
+	_fields[1][0]->GetFigure()->SetSpriteOffset(1);
 
-	// bishops
-	_fields[2][0]->SetFigure(new Bishop(isWhite, 2));
-	_fields[5][0]->SetFigure(new Bishop(isWhite, 2));
+	_fields[6][0]->SetFigure(new Knight(isWhite));
+	_fields[6][0]->GetFigure()->SetSpriteOffset(1);
 
-	// queen and king
-	_fields[3][0]->SetFigure(new Queen(isWhite, 4));
-	_fields[4][0]->SetFigure(new King(isWhite, 5));
+
+	// Bishops
+	_fields[2][0]->SetFigure(new Bishop(isWhite));
+	_fields[2][0]->GetFigure()->SetSpriteOffset(2);
+
+	_fields[5][0]->SetFigure(new Bishop(isWhite));
+	_fields[5][0]->GetFigure()->SetSpriteOffset(2);
+
+	// Queen and King
+	_fields[3][0]->SetFigure(new Queen(isWhite));
+	_fields[3][0]->GetFigure()->SetSpriteOffset(4);
+			   
+	_fields[4][0]->SetFigure(new King(isWhite));
+	_fields[4][0]->GetFigure()->SetSpriteOffset(5);
 
 }
 

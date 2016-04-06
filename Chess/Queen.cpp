@@ -1,7 +1,7 @@
 #include "Queen.h"
 
 
-Queen::Queen(bool isWhite, int spriteXOffset) : Figure(isWhite, spriteXOffset)
+Queen::Queen(bool isWhite) : Figure(isWhite)
 {
 	_hasRecursiveMovement = true;
 	_hasSpecialAttackAbilities = false;

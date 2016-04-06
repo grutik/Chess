@@ -1,8 +1,7 @@
 #include "Figure.h"
 
-Figure::Figure(bool isWhite, int spriteXOffset)
+Figure::Figure(bool isWhite)
 {
-	_spriteOffset = spriteXOffset;
 	_isWhite = isWhite;
 	_hasSpecialAttackAbilities = false;
 	_hasRecursiveMovement = true;
@@ -10,11 +9,6 @@ Figure::Figure(bool isWhite, int spriteXOffset)
 
 Figure::~Figure()
 {
-}
-
-int Figure::GetSpriteOffset()
-{
-	return _spriteOffset;
 }
 
 bool Figure::IsWhite() {

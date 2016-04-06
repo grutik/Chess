@@ -2,7 +2,7 @@
 
 
 
-Bishop::Bishop(bool isWhite, int spriteXOffset) : Figure(isWhite, spriteXOffset)
+Bishop::Bishop(bool isWhite) : Figure(isWhite)
 {
 	_hasRecursiveMovement = true;
 	_hasSpecialAttackAbilities = false;

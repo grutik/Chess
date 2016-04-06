@@ -1,6 +1,6 @@
 #include "Pawn.h"
 
-Pawn::Pawn(bool isWhite, int spriteXOffset) : Figure(isWhite, spriteXOffset)
+Pawn::Pawn(bool isWhite) : Figure(isWhite)
 {
 	_hasRecursiveMovement = false;
 	_hasSpecialAttackAbilities = true;

@@ -1,9 +1,11 @@
 #pragma once
+#include "Sprite.h"
 
 ///
 ///  \brief Abstrakcyjna klasa figury szachowej. Definiuje wspólne cechy figur.
 ///
-class Figure
+/// Dziedziczy z klasy Sprite, dziêki czemu mo¿liwe jest okreœlenie fragmentu bitmapy dla danej figury
+class Figure : public Sprite
 {
 public:
 	///
@@ -13,26 +15,21 @@ public:
 	///
 	typedef int*(*movement)(int x, int y);
 
-	Figure(bool white, int spriteXOffset);
+	Figure(bool white);
 	~Figure();
 	
 	///
-	/// Zwraca przesuniêcie sprite'a na osi X
-	///
-	int GetSpriteOffset();
-
-	///
-	/// Okreœla, czy figura jest bia³ego koloru
+	/// \brief Okreœla, czy figura jest bia³ego koloru
 	///
 	bool IsWhite();
 
 	///
-	/// Okreœla, czy figury s¹ tego samego koloru
+	/// \brief Okreœla, czy figury s¹ tego samego koloru
 	///
 	bool HasSameColor(Figure* figure);
 
 	///
-	/// Okreœla, czy figury s¹ ró¿nego koloru
+	/// \brief Okreœla, czy figury s¹ ró¿nego koloru
 	///
 	bool HasDifferentColor(Figure* figure);
 
@@ -44,36 +41,38 @@ public:
 	bool HasRecursiveMovement();
 
 	///
-	/// Okreœla, czy definicje podstawowych ruchów figury s¹ ró¿ne od ruchów zwi¹zanych z atakiem - dotyczy pionków.
+	/// \brief Okreœla, czy definicje podstawowych ruchów figury s¹ ró¿ne od ruchów zwi¹zanych z atakiem - dotyczy pionków.
 	///
 	bool HasSpecialAttackAbilities();
 
 
 	///
-	/// Definiuje zestaw podstawowych ruchów figury
+	/// \brief Definiuje zestaw podstawowych ruchów figury
 	///
 	movement* GetBasicMoves();
 
 	///
-	/// Okreœla iloœæ podstawowych ruchów figury
+	/// \brief Okreœla iloœæ podstawowych ruchów figury
 	///
 	int GetBasicMovesCount();
 
 	///
-	/// Definiuje zestaw ruchów figury zwi¹zanych z atakiem
+	/// \brief Definiuje zestaw ruchów figury zwi¹zanych z atakiem
 	///
 	movement* GetAttackMoves();
 
 	///
-	/// Okreœla iloœæ ruchów figury zwi¹zanych z atakiem
+	/// \brief Okreœla iloœæ ruchów figury zwi¹zanych z atakiem
 	///
 	int GetAttackMovesCount();
 
 private:
+	///
+	/// \brief Inicjalizuje podstawowe ruchy figury
+	///
 	virtual void InitBasicMoves() = 0;
 
 protected:
-	int _spriteOffset;
 	bool _isWhite;
 	bool _hasRecursiveMovement;
 	bool _hasSpecialAttackAbilities;

@@ -7,7 +7,7 @@
 class Rook : public Figure
 {
 public:
-	Rook(bool isWhite, int spriteXOffset);
+	Rook(bool isWhite);
 	~Rook();
 private:
 	void InitBasicMoves();

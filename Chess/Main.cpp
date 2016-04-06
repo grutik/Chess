@@ -132,31 +132,31 @@ void DrawBoard() {
 	{
 		for (int j = 0; j < board.numberOfFields; j++)
 		{
-			Field field = *board.GetField(i, j);
+			Field* field = board.GetField(i, j);
 			ALLEGRO_BITMAP *field_color;
 
-			// Wybór koloru pola
-			if (field.IsSelected())
+			// Wybór koloru pola pola
+			if (field->IsSelected())
 				field_color = field_selected;
 			else
-				if (field.GetColor() == 1)
+				if (field->GetColor() == 1)
 					field_color = field_light;
 				else
 					field_color = field_dark;
 
-			int xPosition = FIELD_SIZE*field.GetX();
-			int yPosition = FIELD_SIZE*field.GetY();
+			int xPosition = FIELD_SIZE*field->GetX();
+			int yPosition = FIELD_SIZE*field->GetY();
 
 			// Rysowanie pola
 			al_draw_bitmap(field_color, xPosition, yPosition, 0);
 
 			// Rysowanie figury znajduj¹cej siê na tym polu
-			if (field.HasFigure())
+			if (field->HasFigure())
 			{
-				int row = field.GetFigure()->IsWhite() ? 0 : 100;
+				int row = field->GetFigure()->IsWhite() ? 0 : 100;
 				int col = 0;
 
-				al_draw_bitmap_region(bmpChessPieces, field.GetFigure()->GetSpriteOffset() * FIELD_SIZE, row, FIELD_SIZE, FIELD_SIZE, xPosition, yPosition, 0);
+				al_draw_bitmap_region(bmpChessPieces, field->GetFigure()->GetSpriteOffset() * FIELD_SIZE, row, FIELD_SIZE, FIELD_SIZE, xPosition, yPosition, 0);
 			}
 		}
 	}

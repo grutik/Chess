@@ -2,7 +2,7 @@
 
 
 
-King::King(bool isWhite, int spriteXOffset) : Figure(isWhite, spriteXOffset)
+King::King(bool isWhite) : Figure(isWhite)
 {
 	_hasRecursiveMovement = false;
 	_hasSpecialAttackAbilities = false;
