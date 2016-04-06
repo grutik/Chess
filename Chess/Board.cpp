@@ -67,11 +67,11 @@ void Board::CreateFields() {
 	bool draw_white = true;
 
 	_fields = new Field**[numberOfFields];
-	for (int i = 0; i < Board::numberOfFields; i++)
+	for (int i = 0; i < numberOfFields; i++)
 	{
 
 		_fields[i] = new Field*[numberOfFields];
-		for (int j = 0; j < Board::numberOfFields; j++)
+		for (int j = 0; j < numberOfFields; j++)
 		{
 			int color = draw_white ? 1 : 0;
 			_fields[i][j] = new Field(i, j, color);
@@ -158,7 +158,7 @@ void Board::SetFigures() {
 	// Queen and King
 	_fields[3][0]->SetFigure(new Queen(isWhite));
 	_fields[3][0]->GetFigure()->SetSpriteOffset(4);
-			   
+
 	_fields[4][0]->SetFigure(new King(isWhite));
 	_fields[4][0]->GetFigure()->SetSpriteOffset(5);
 

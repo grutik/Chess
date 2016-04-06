@@ -13,6 +13,7 @@ Field::Field(int xx, int yy, int newColor)
 
 Field::~Field()
 {
+	delete(_fig);
 }
 
 int Field::GetX()
